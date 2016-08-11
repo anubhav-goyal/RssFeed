@@ -1,0 +1,11 @@
+.idea
+.classpath
+.project
+RssFeed-grailsPlugins.iml
+application.properties
+RssFeed.iml
+grailsw.bat
+grailsw
+target
+test
+web-app/WEB-INF
