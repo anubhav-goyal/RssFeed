@@ -20,11 +20,11 @@
 
 <div class="container">
     <div class="row">
-        <g:each in="${feeds}" var="valueFeed">
+        %{--<g:each in="${feeds}" var="valueFeed">--}%
             <div class="col-sm-3">
-                ${valueFeed}
+                ${feeds}
             </div>
-        </g:each>
+        %{--</g:each>--}%
     </div>
 </div>
 %{--<table>--}%

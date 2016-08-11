@@ -10,5 +10,10 @@ class RssFeed {
     String linkId
 
     static constraints = {
+        link unique: true
     }
+
+//    static mapping = {
+//        link unique: link
+//    }
 }
