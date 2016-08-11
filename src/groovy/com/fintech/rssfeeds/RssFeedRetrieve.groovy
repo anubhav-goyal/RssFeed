@@ -12,11 +12,10 @@ import java.util.zip.GZIPInputStream
  */
 class RssFeedRetrieve {
 
-    List<SyndEntry> returnFeeds(String url){
-        SyndFeed feed = null
-        InputStream is = null
-        List<SyndEntry> syndEntries
-        def rssMap = [:]
+    def returnFeeds(String url){
+        SyndFeed feed = null;
+        InputStream is = null;
+        List<SyndEntry> syndEntryList
         try {
 
             URLConnection openConnection = new URL(url).openConnection()
@@ -28,8 +27,7 @@ class RssFeedRetrieve {
             InputSource source = new InputSource(is)
             SyndFeedInput input = new SyndFeedInput()
             feed = input.build(source)
-
-            syndEntries = feed.getEntries()
+            syndEntryList = feed.getEntries()
 
         } catch (Exception e){
             println("Exception occured ${e}")
@@ -37,7 +35,7 @@ class RssFeedRetrieve {
             if( is != null)	is.close();
         }
 
-        return syndEntries
+        return syndEntryList
         //return rssMap
     }
 }

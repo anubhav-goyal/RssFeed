@@ -1,10 +1,7 @@
 package com.fintech.rssfeeds
 
+import com.sun.syndication.feed.synd.SyndEntry
 
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
 class RssFeedController {
     // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -13,10 +10,10 @@ class RssFeedController {
     def index() {
         String url = "http://timesofindia.indiatimes.com/rssfeedstopstories.cms"
         RssFeedRetrieve rssFeedRetrieve = new RssFeedRetrieve()
-        def rssMap = rssFeedRetrieve.returnFeeds(url)
-        //rssFeedService.save(rssMap)
-
-        render rssMap
+        List<SyndEntry> syndEntries = rssFeedRetrieve.returnFeeds(url)
+        rssFeedService.save(syndEntries)
+        List<RssFeed> feedList = rssFeedService.read()
+        [feeds:feedList]
     }
 
     def show(RssFeed rssFeedInstance) {

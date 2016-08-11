@@ -1,38 +1,31 @@
 package com.fintech.rssfeeds
 
+import grails.validation.Validateable
+
 /**
  * Created by anubhav on 11/8/16.
  */
+@Validateable
 class RssFeedCO {
     String title
     String content
-    Date dateUpdated
+    String dateUpdated
     String link
     String author
-    String linkId
+    String description
+    String uri
 
     static constraints = {
-        link unique: true
+        link unique: true, validator: {val->
+            def recordFeed = RssFeed.findByLink(val)
+            if(recordFeed){
+                return "Sorry"
+            }
+
+        }
+        author nullable: true, blank: true
+        uri nullable: true,blank: true
+        description nullable: true,blank: true
     }
 
-    RssFeedCO(def rssMap){
-        def keyList = rssMap.keySet()
-        for(String keys : keyList){
-            if (keys.endsWith("].titleEx.value") && keys.startsWith("SyndFeedImpl.entries")){
-                println "${keys} values ${rssMap.get(keys)}"
-            }
-            else if (keys.endsWith("].link") && keys.startsWith("SyndFeedImpl.entries")){
-                println "${keys} values ${rssMap.get(keys)}"
-            }
-            else if (keys.endsWith("].description.value") && keys.startsWith("SyndFeedImpl.entries")){
-                println "${keys} values ${rssMap.get(keys)}"
-            }
-            else if (keys.endsWith("].author") && keys.startsWith("SyndFeedImpl.entries")){
-                println "${keys} values ${rssMap.get(keys)}"
-            }
-            else if (keys.endsWith("].date") && keys.startsWith("SyndFeedImpl.entries")){
-                println "${keys} values ${rssMap.get(keys)}"
-            }
-        }
-    }
 }
