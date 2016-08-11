@@ -1,8 +1,6 @@
 package com.fintech.rssfeeds
 
 import com.sun.syndication.feed.synd.SyndEntry
-import grails.transaction.Transactional
-
 
 class RssFeedService {
  static transactional = false
@@ -20,6 +18,13 @@ class RssFeedService {
             if(rssFeedCO.validate()){
                 RssFeed rssFeed = new RssFeed(rssFeedCO)
                 rssFeed.save(flush: true)
+            }
+            else{
+                RssFeed rssFeed =  RssFeed.findByLink(rssFeedCO.link)
+                rssFeed.title = rssFeedCO.title
+                rssFeed.description = rssFeedCO.description
+                rssFeed.dateUpdated = rssFeedCO.dateUpdated
+                rssFeed.save()
             }
 
         }

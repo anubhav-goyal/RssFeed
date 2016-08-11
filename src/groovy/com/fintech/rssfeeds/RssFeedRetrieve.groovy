@@ -36,6 +36,5 @@ class RssFeedRetrieve {
         }
 
         return syndEntryList
-        //return rssMap
     }
 }
