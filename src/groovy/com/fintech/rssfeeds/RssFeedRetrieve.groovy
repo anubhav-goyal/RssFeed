@@ -7,12 +7,10 @@ import org.xml.sax.InputSource
 
 import java.util.zip.GZIPInputStream
 
-/**
- * Created by anubhav on 11/8/16.
- */
+
 class RssFeedRetrieve {
 
-    def returnFeeds(String url){
+   static List<SyndEntry> returnFeeds(String url){
         SyndFeed feed = null;
         InputStream is = null;
         List<SyndEntry> syndEntryList
@@ -21,9 +19,6 @@ class RssFeedRetrieve {
             URLConnection openConnection = new URL(url).openConnection()
             is = new URL(url).openConnection().getInputStream()
 
-            if("gzip".equals(openConnection.getContentEncoding())){
-                is = new GZIPInputStream(is)
-            }
             InputSource source = new InputSource(is)
             SyndFeedInput input = new SyndFeedInput()
             feed = input.build(source)

@@ -3,35 +3,52 @@ package com.fintech.rssfeeds
 import com.sun.syndication.feed.synd.SyndEntry
 
 class RssFeedService {
- static transactional = false
-    RssFeed save(List<SyndEntry> syndEntries) {
-        for (SyndEntry syndEntry : syndEntries) {
-            String desc = syndEntry.getDescription().getValue()
-            if(desc!=null){
-                desc = desc.substring(0,desc.length()>150?150:desc.length())
-            }
 
-            RssFeedCO rssFeedCO = new RssFeedCO(title: syndEntry.getTitle(), content: syndEntry.getContents(),
-                    dateUpdated: syndEntry.getPublishedDate(), link: syndEntry.getLink(),
-                    author: syndEntry.getAuthor(), uri: syndEntry.getUri(),
-                    description: desc)
-            if(rssFeedCO.validate()){
-                RssFeed rssFeed = new RssFeed(rssFeedCO)
+    static transactional = false
+
+
+    RssFeed saveFeeds(List<SyndEntry> syndEntries, UrlFeed recievedUrlFeed) {
+        RssFeed rssFeed = null
+        syndEntries.each { syndEntry ->
+            RssFeedCO rssFeedCO = new RssFeedCO(syndEntry, recievedUrlFeed)
+            if (rssFeedCO.validate()) {
+                rssFeed = new RssFeed(rssFeedCO)
                 rssFeed.save(flush: true)
-            }
-            else{
-                RssFeed rssFeed =  RssFeed.findByLink(rssFeedCO.link)
-                rssFeed.title = rssFeedCO.title
-                rssFeed.description = rssFeedCO.description
-                rssFeed.dateUpdated = rssFeedCO.dateUpdated
-                rssFeed.save()
             }
 
         }
+        return rssFeed
     }
 
-    List<RssFeed> read(){
+    List<RssFeed> read() {
         List<RssFeed> rssFeed = RssFeed.findAll()
         return rssFeed
+    }
+
+    UrlFeed createUrl(UrlFeedCO urlFeedCO) {
+        UrlFeed urlFeed = null
+        if (urlFeedCO.validate()) {
+            urlFeed = new UrlFeed(urlFeedCO)
+            urlFeed.save(flush: true)
+        }
+        return urlFeed
+    }
+
+    List<RssFeed> readFeeds(UrlFeedCO urlFeedCO) {
+        UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
+        def c = RssFeed.createCriteria()
+        def rssRecords = c.list() {
+            and {
+                eq('urlFeed', urlFeed)
+            }
+            order("lastUpdated", "desc")
+        }
+    }
+
+    def delete(UrlFeedCO urlFeedCO) {
+        UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
+        Integer deletedFeeds = RssFeed.executeUpdate("delete from RssFeed where urlFeed=${urlFeed.id}")
+        if (deletedFeeds != 0)
+            urlFeed.delete()
     }
 }

@@ -4,11 +4,13 @@ class RssFeed {
 
     String title
     String content
-    String dateUpdated
+    String datePublish
     String link
     String author
     String description
     String uri
+    UrlFeed urlFeed
+    Date lastUpdated
 
     static constraints = {
         link unique: true, validator: {val->
@@ -23,14 +25,19 @@ class RssFeed {
         description nullable: true,blank: true
     }
 
+    static mapping = {
+        description sqlType: "text"
+    }
+
     RssFeed(RssFeedCO rssFeedCO){
         title = rssFeedCO.title
         content = rssFeedCO.content
-        dateUpdated = rssFeedCO.dateUpdated
+        datePublish = rssFeedCO.datePublish
         description = rssFeedCO.description
         link = rssFeedCO.link
         author = rssFeedCO.author
         uri = rssFeedCO.uri
+        urlFeed = rssFeedCO.urlFeed
     }
 
 }
