@@ -20,10 +20,6 @@ class RssFeedService {
         return rssFeed
     }
 
-    List<RssFeed> read() {
-        List<RssFeed> rssFeed = RssFeed.findAll()
-        return rssFeed
-    }
 
     UrlFeed createUrl(UrlFeedCO urlFeedCO) {
         UrlFeed urlFeed = null
@@ -37,18 +33,18 @@ class RssFeedService {
     List<RssFeed> readFeeds(UrlFeedCO urlFeedCO) {
         UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
         def c = RssFeed.createCriteria()
-        def rssRecords = c.list() {
-            and {
-                eq('urlFeed', urlFeed)
-            }
-            order("lastUpdated", "desc")
+        List<RssFeed> rssRecords = c.list() {
+            eq('urlFeed', urlFeed)
+            order("dateUpload", "desc")
         }
+        return rssRecords
     }
 
-    def delete(UrlFeedCO urlFeedCO) {
+    Integer delete(UrlFeedCO urlFeedCO) {
         UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
         Integer deletedFeeds = RssFeed.executeUpdate("delete from RssFeed where urlFeed=${urlFeed.id}")
         if (deletedFeeds != 0)
-            urlFeed.delete()
+           deletedFeeds = urlFeed.delete()
+        return deletedFeeds
     }
 }

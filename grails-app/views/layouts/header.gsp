@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title></title>
+    <title>News</title>
     <link rel="stylesheet" href="${resource(dir:"css",file: "bootstrap.css")}"/>
     <link rel="stylesheet" href="${resource(dir:"css",file: "bootstrap-theme.css")}"/>
 

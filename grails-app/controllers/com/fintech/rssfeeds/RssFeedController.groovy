@@ -7,11 +7,9 @@ class RssFeedController {
     def rssFeedService
 
     def index(UrlFeedCO urlFeedCO) {
-        //String url = "http://timesofindia.indiatimes.com/rssfeedstopstories.cms"
-        // String url = "http://feeds.feedburner.com/TechCrunch/startups"
         List<RssFeed> feedList
         if (urlFeedCO.url == null || urlFeedCO.url.equals("all")) {
-            feedList = RssFeed.list()
+            feedList = RssFeed.list(sort: "dateUpload", order: "desc")
             urlFeedCO = new UrlFeedCO(url: "all")
         } else {
             feedList = rssFeedService.readFeeds(urlFeedCO)
@@ -20,28 +18,23 @@ class RssFeedController {
         [feeds: feedList, urls: urlList, refreshUrl: urlFeedCO.url]
     }
 
-    def show(RssFeed rssFeedInstance) {
-        respond rssFeedInstance
-    }
-
     def create(UrlFeedCO urlFeedCO) {
         UrlFeed urlFeed = rssFeedService.createUrl(urlFeedCO)
-        println("url feed ${urlFeed}")
         if (urlFeed)
             saveFeed(urlFeed)
         else
-            redirect index()
+            redirect(action: "index", params: [url: urlFeed.url])
     }
 
     def saveFeed(UrlFeed urlFeed) {
         List<SyndEntry> syndEntries = RssFeedRetrieve.returnFeeds(urlFeed.url)
         rssFeedService.saveFeeds(syndEntries, urlFeed)
-        redirect index()
+        redirect(action: "index", params: [url: urlFeed.url])
     }
 
     def delete(UrlFeedCO urlFeedCO) {
         rssFeedService.delete(urlFeedCO)
-        redirect index()
+        redirect(action: "index")
     }
 
     def refresh(UrlFeedCO urlFeedCO) {
@@ -56,7 +49,7 @@ class RssFeedController {
             List<SyndEntry> syndEntries = RssFeedRetrieve.returnFeeds(urlFeed.url)
             rssFeedService.saveFeeds(syndEntries, urlFeed)
         }
-        redirect action: index()
+        redirect(action: "index", params: [url: urlFeedCO.url])
     }
 
 }

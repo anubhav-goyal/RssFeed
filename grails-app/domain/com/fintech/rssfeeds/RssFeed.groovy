@@ -10,7 +10,7 @@ class RssFeed {
     String description
     String uri
     UrlFeed urlFeed
-    Date lastUpdated
+    Date dateUpload
 
     static constraints = {
         link unique: true, validator: {val->
@@ -38,6 +38,7 @@ class RssFeed {
         author = rssFeedCO.author
         uri = rssFeedCO.uri
         urlFeed = rssFeedCO.urlFeed
+        dateUpload = rssFeedCO.dateUpload
     }
 
 }
