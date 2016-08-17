@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'rssFeed.label', default: 'RssFeed')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#create-rssFeed" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="create-rssFeed" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:hasErrors bean="${rssFeedInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${rssFeedInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form url="[resource:rssFeedInstance, action:'save']" >
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
-			</g:form>
-		</div>
-	</body>
+<head>
+    <meta name="layout" content="feedLayout">
+    <title>Create URL</title>
+</head>
+
+<body>
+<section id="contact" class="contact section has-pattern">
+    <div class="container">
+        <div class="row text-center">
+            <h2 class="title">Add New URL</h2>
+
+            <div class="intro col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                <p>You can add new URL for recieving Updates</p>
+            </div>
+        </div><!--//row-->
+        <div class="row text-center">
+            <div class="contact-form col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                <g:form class="form" controller="rssFeed" action="create">
+                    <div class="form-group name">
+                        <g:if test="${flash.message}">
+                            ${flash.message}
+                        </g:if>
+                    </div>
+                    <div class="form-group name">
+                        <label class="sr-only" for="url"><g:message code="default.label.feed.url" default="Enter URL"/> </label>
+                        <input id="url" type="text" name="url" class="form-control" placeholder="URL:" required>
+                    </div><!--//form-group-->
+                    <button type="submit" class="btn btn-lg btn-theme">Create</button>
+                </g:form><!--//form-->
+            </div><!--//contact-form-->
+        </div><!--//row-->
+    </div><!--//container-->
+</section><!--//contact-->
+</body>
 </html>

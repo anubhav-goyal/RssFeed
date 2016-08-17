@@ -8,14 +8,11 @@ import java.text.SimpleDateFormat
 @Validateable
 class RssFeedCO {
     String title
-    String content
-    String datePublish
+    String Description
+    Date datePublish
     String link
-    String author
-    String description
-    String uri
     UrlFeed urlFeed
-    Date dateUpload
+    //Date dateUpload
 
     static constraints = {
         link unique: true, validator: { val ->
@@ -25,21 +22,15 @@ class RssFeedCO {
             }
 
         }
-        author nullable: true, blank: true
-        uri nullable: true, blank: true
-        description nullable: true, blank: true
     }
 
     RssFeedCO(SyndEntry syndEntry, UrlFeed urlFeed) {
         title = syndEntry.getTitle()
-        content = syndEntry.getContents()
+        Description = syndEntry.getDescription().getValue()
         datePublish = syndEntry.getPublishedDate()
         link = syndEntry.getLink()
-        author = syndEntry.getAuthor()
-        description = syndEntry.getDescription().getValue()
-        uri = syndEntry.getUri()
         this.urlFeed = urlFeed
-        dateUpload = changeToDate(datePublish)
+       // dateUpload = changeToDate(datePublish)
     }
 
     Date changeToDate(String datePublish) {

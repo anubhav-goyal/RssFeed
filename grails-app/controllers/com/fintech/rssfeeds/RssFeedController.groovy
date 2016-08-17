@@ -6,24 +6,18 @@ class RssFeedController {
 
     def rssFeedService
 
-    def index(UrlFeedCO urlFeedCO) {
-        List<RssFeed> feedList
-        if (urlFeedCO.url == null || urlFeedCO.url.equals("all")) {
-            feedList = RssFeed.list(sort: "dateUpload", order: "desc")
-            urlFeedCO = new UrlFeedCO(url: "all")
-        } else {
-            feedList = rssFeedService.readFeeds(urlFeedCO)
-        }
-        List<UrlFeed> urlList = UrlFeed.findAll()
-        [feeds: feedList, urls: urlList, refreshUrl: urlFeedCO.url]
+    def index() {
     }
 
     def create(UrlFeedCO urlFeedCO) {
         UrlFeed urlFeed = rssFeedService.createUrl(urlFeedCO)
-        if (urlFeed)
+        if (urlFeed){
+            flash.message ="URL has been added in Record"
             saveFeed(urlFeed)
-        else
-            redirect(action: "index", params: [url: urlFeed.url])
+        }
+        else{
+            flash.message = "Sorry Record Not Entered"
+        }
     }
 
     def saveFeed(UrlFeed urlFeed) {
@@ -38,7 +32,7 @@ class RssFeedController {
     }
 
     def refresh(UrlFeedCO urlFeedCO) {
-        if (urlFeedCO.url.equals("all")) {
+        if (urlFeedCO.url==null || urlFeedCO.url.equals("")) {
             List<UrlFeed> urlList = UrlFeed.findAll()
             urlList.each { feedUrl ->
                 List<SyndEntry> syndEntries = RssFeedRetrieve.returnFeeds(feedUrl.url)
@@ -49,7 +43,34 @@ class RssFeedController {
             List<SyndEntry> syndEntries = RssFeedRetrieve.returnFeeds(urlFeed.url)
             rssFeedService.saveFeeds(syndEntries, urlFeed)
         }
-        redirect(action: "index", params: [url: urlFeedCO.url])
+        if (urlFeedCO.url == null || urlFeedCO.url.equals("")){
+            feedList()
+        }
+        else {
+            selectedUrlFeed(urlFeedCO)
+        }
+    }
+
+    def feedList(){
+        List<RssFeed> feedList = RssFeed.createCriteria().list() {
+            maxResults(3)
+            order("datePublish", "desc")
+            firstResult(params.offset?params.offset as int:0)
+        }
+        Integer countFeeds = RssFeed.count
+        render (view: "show",model: [countFeed: countFeeds,feeds: feedList])
+    }
+
+    def selectedUrlFeed(UrlFeedCO urlFeedCO){
+        UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
+        List<RssFeed> feedList = RssFeed.createCriteria().list() {
+            eq('urlFeed', urlFeed)
+            maxResults(5)
+            order("datePublish", "desc")
+            firstResult(params.offset?params.offset as int:0)
+        }
+        Integer countFeeds = RssFeed.countByUrlFeed(urlFeed)
+        render (view: "show",model: [countFeed: countFeeds,feeds: feedList,url: urlFeedCO.url])
     }
 
 }

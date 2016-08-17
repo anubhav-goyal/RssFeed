@@ -32,10 +32,9 @@ class RssFeedService {
 
     List<RssFeed> readFeeds(UrlFeedCO urlFeedCO) {
         UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
-        def c = RssFeed.createCriteria()
-        List<RssFeed> rssRecords = c.list() {
+        List<RssFeed> rssRecords = RssFeed.createCriteria().list() {
             eq('urlFeed', urlFeed)
-            order("dateUpload", "desc")
+            order("datePublish", "desc")
         }
         return rssRecords
     }
@@ -43,8 +42,7 @@ class RssFeedService {
     Integer delete(UrlFeedCO urlFeedCO) {
         UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
         Integer deletedFeeds = RssFeed.executeUpdate("delete from RssFeed where urlFeed=${urlFeed.id}")
-        if (deletedFeeds != 0)
-           deletedFeeds = urlFeed.delete()
+        deletedFeeds = urlFeed.delete()
         return deletedFeeds
     }
 }
