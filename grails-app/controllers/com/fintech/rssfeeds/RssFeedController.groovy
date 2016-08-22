@@ -23,7 +23,9 @@ class RssFeedController {
     def saveFeed(UrlFeed urlFeed) {
         List<SyndEntry> syndEntries = RssFeedRetrieve.returnFeeds(urlFeed.url)
         rssFeedService.saveFeeds(syndEntries, urlFeed)
-        redirect(action: "index", params: [url: urlFeed.url])
+        flash.message = "Feeds are Stored"
+        render view: "create"
+        //redirect(action: "index", params: [url: urlFeed.url])
     }
 
     def delete(UrlFeedCO urlFeedCO) {

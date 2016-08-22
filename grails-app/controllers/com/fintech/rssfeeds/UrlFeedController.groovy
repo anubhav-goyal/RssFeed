@@ -25,17 +25,25 @@ class UrlFeedController {
     }
 
     def delete() {
-        List<UrlFeed> urlFeedList = UrlFeed.findAll()
-        render (view: "/rssFeed/delete",model: [urls:urlFeedList])
+        int offSet = params.offset?params.offset as int:0
+        List<UrlFeed> urlFeedList = getUrlLists(offSet)
+        Integer countUrl = UrlFeed.count
+        render (view: "/rssFeed/delete",model: [countUrl: countUrl,urls:urlFeedList])
     }
 
     def urlList(){
-        List<UrlFeed> urlFeedList = UrlFeed.createCriteria().list() {
-            maxResults(3)
-            firstResult(params.offset?params.offset as int:0)
-        }
+        int offSet = params.offset?params.offset as int:0
+        List<UrlFeed> urlFeedList = getUrlLists(offSet)
         Integer countUrl = UrlFeed.count
-        render (view: "/rssFeed/showUrl",model: [countFeed: countUrl,urlFeeds: urlFeedList])
+        render (view: "/rssFeed/showUrl",model: [countUrl: countUrl,urlFeeds: urlFeedList])
 
+    }
+
+   private List<UrlFeed> getUrlLists(int offSet){
+        List<UrlFeed> urlFeedList = UrlFeed.createCriteria().list() {
+            maxResults(5)
+            firstResult(offSet)
+        }
+        return urlFeedList
     }
 }

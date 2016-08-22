@@ -72,11 +72,6 @@
                             </li>
                         </ul>
                     </li>
-                    %{--<li class="nav-item"><a--}%
-                    %{--href="${g.createLink(controller: "rssFeed", action: "feedList")}">Feeds</a></li>--}%
-                    %{--<li class="nav-item"><a class="scrollto" href="#story">Story</a></li>--}%
-                    %{--<li class="nav-item"><a class="scrollto" href="#pricing">Pricing</a></li>--}%
-                    %{--<li class="nav-item last"><a class="scrollto" href="#contact">Contact</a></li>--}%
                 </ul><!--//nav-->
             </div><!--//navabr-collapse-->
         </nav><!--//main-nav-->

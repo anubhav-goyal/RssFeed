@@ -32,18 +32,18 @@ class RssFeedCO {
         this.urlFeed = urlFeed
        // dateUpload = changeToDate(datePublish)
     }
-
-    Date changeToDate(String datePublish) {
-        try {
-            Date date = Date.parse("E MMM dd H:m:s z yyyy", datePublish)
-            String stringDate = date.format("yyyy-MM-dd HH:m:s")
-            Date actualDate = new SimpleDateFormat("yyyy-MM-dd HH:m:s").parse(stringDate)
-            return actualDate
-        }
-        catch (Exception ex) {
-            println(ex)
-        }
-        return null
-    }
+//
+//    Date changeToDate(String datePublish) {
+//        try {
+//            Date date = Date.parse("E MMM dd H:m:s z yyyy", datePublish)
+//            String stringDate = date.format("yyyy-MM-dd HH:m:s")
+//            Date actualDate = new SimpleDateFormat("yyyy-MM-dd HH:m:s").parse(stringDate)
+//            return actualDate
+//        }
+//        catch (Exception ex) {
+//            println(ex)
+//        }
+//        return null
+//    }
 
 }

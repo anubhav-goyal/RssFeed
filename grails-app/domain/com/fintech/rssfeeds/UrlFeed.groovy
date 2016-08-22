@@ -8,7 +8,6 @@ class UrlFeed {
     Date dateCreated
     static constraints = {
         url blank: false, unique: true
-        dateCreated nullable: true
     }
 
     UrlFeed(UrlFeedCO urlFeedCO){
