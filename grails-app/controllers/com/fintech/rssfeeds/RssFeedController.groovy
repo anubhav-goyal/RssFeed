@@ -25,7 +25,6 @@ class RssFeedController {
         rssFeedService.saveFeeds(syndEntries, urlFeed)
         flash.message = "Feeds are Stored"
         render view: "create"
-        //redirect(action: "index", params: [url: urlFeed.url])
     }
 
     def delete(UrlFeedCO urlFeedCO) {
@@ -67,7 +66,7 @@ class RssFeedController {
         UrlFeed urlFeed = UrlFeed.findByUrl(urlFeedCO.url)
         List<RssFeed> feedList = RssFeed.createCriteria().list() {
             eq('urlFeed', urlFeed)
-            maxResults(5)
+            maxResults(3)
             order("datePublish", "desc")
             firstResult(params.offset?params.offset as int:0)
         }

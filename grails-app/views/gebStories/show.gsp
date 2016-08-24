@@ -18,11 +18,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <g:if test="${feeds}">
+                <g:if test="${stories}">
                     <div class="row">
                         <div class="col-md-12 text-right" style="margin-top: 10px">
                             <g:form class="form-group" controller="rssFeed" action="refresh">
-                                <input type="hidden" name="url" value="${url}"/>
+                                <input type="hidden" name="url" value=""/>
                                 <button type="submit" class="btn btn-default" aria-label="Left Align"
                                         data-toggle="tooltip" title="Refresh">
                                     <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
@@ -30,37 +30,27 @@
                             </g:form>
                         </div>
                     </div>
-                    <g:each in="${feeds}" var="feed">
+                    <g:each in="${stories}" var="feed">
                         <div class="panel panel-default panel-body">
                             <div class="item col-md-12 text-left">
                                 <div class="content">
-                                    <div class="row">
+                                    <div class="row text-danger">
                                         <h3>${feed.title}</h3>
                                     </div>
 
                                     <div class="row">
-                                        <fmtDate:formattingDate val="${feed.datePublish}"/>
+                                        ${feed.author} ,  ${feed.publishDate}
                                     </div>
 
                                     <div class="row">
                                         ${raw(feed.description)}
-                                    </div>
-
-                                    <div class="row text-right">
-                                        <a href="${feed.link}" target="_blank">Read More.....</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </g:each>
                     <div class="item col-md-12 text-center">
-                        <g:if test="${url}">
-                            <g:paginate total="${countFeed}" controller="rssFeed" action="selectedUrlFeed" max="3"
-                                        params="[url: url]"/>
-                        </g:if>
-                        <g:else>
-                            <g:paginate total="${countFeed}" controller="rssFeed" action="feedList" max="3"/>
-                        </g:else>
+                            <g:paginate total="${countStory}" controller="gebStroies" action="storyList" max="1"/>
                     </div>
                 </g:if>
                 <g:else>

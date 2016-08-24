@@ -9,11 +9,11 @@ class FormatingDateTagLib {
     String date = attr.val
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd H:m:s")
-            Date newDate = simpleDateFormat.parse(date)
-            out << newDate
+            Date parsedDate = simpleDateFormat.parse(date)
+            out << parsedDate
         }
         catch (Exception ex) {
-            println("hello : "+ex)
+            println("Exception : ${ex}")
         }
     }
 }

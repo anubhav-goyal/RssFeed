@@ -23,9 +23,10 @@
     <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="${resource(dir: "assets/css", file: "styles.css")}"/>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
 </head>
 
-<body data-spy="scroll">
+<body>
 <!-- ******HEADER****** -->
 <header id="top" class="header navbar-fixed-top">
     <div class="container">
@@ -49,6 +50,8 @@
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a
                             href="${g.createLink(controller: "urlFeed", action: "index")}">Home</a></li>
+                    <li class="nav-item"><a
+                            href="${g.createLink(controller: "gebStroies", action: "storyList")}">Story</a></li>
                     <li class="nav-item dropdown"><a href="#"
                                                      class="dropdown-toggle" data-toggle="dropdown" role="button"
                                                      aria-haspopup="true" aria-expanded="false">URL<span
@@ -80,7 +83,7 @@
 
 <g:layoutBody/>
 
-<footer class="footer">
+<footer class="footer navbar-fixed-bottom">
     <div class="container">
         <small class="copyright pull-left">FinTech &copy; 2016</small>
         <ul class="links list-inline">

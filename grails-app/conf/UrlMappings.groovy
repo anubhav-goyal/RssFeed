@@ -8,7 +8,7 @@ class UrlMappings {
         }
 
 //        "/"(view:"/index")
-        "/"(controller: "urlFeed", action: "index")
+        "/"(controller: "rssFeed")
         "500"(view: '/error')
     }
 }

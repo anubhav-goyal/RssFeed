@@ -8,11 +8,11 @@
 <body>
 <section id="contact" class="contact section has-pattern">
     <div class="container">
-        <div class="row text-center">
+        <div class="row text-center" style="margin-top: 100px">
             <h2 class="title">Add New URL</h2>
 
             <div class="intro col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                <p>You can add new URL for recieving Updates</p>
+                <p>You can add new URL for receiving Updates</p>
             </div>
         </div><!--//row-->
         <div class="row text-center">

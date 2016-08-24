@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<section id="how" class="how section has-pattern">
+<section id="how" class="how section has-pattern" style="margin-top: 50px;height: 600px">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
