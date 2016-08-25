@@ -2,15 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="feedLayout">
-    <title>View Feeds</title>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip({
-                placement: 'bottom'
-            })
-        });
-
-    </script>
+    <title>Stories</title>
 </head>
 
 <body>
@@ -19,7 +11,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <g:if test="${stories}">
-                    <div class="row">
+%{--                    <div class="row">
                         <div class="col-md-12 text-right" style="margin-top: 10px">
                             <g:form class="form-group" controller="rssFeed" action="refresh">
                                 <input type="hidden" name="url" value=""/>
@@ -29,7 +21,7 @@
                                 </button>
                             </g:form>
                         </div>
-                    </div>
+                    </div>--}%
                     <g:each in="${stories}" var="feed">
                         <div class="panel panel-default panel-body">
                             <div class="item col-md-12 text-left">
@@ -39,7 +31,7 @@
                                     </div>
 
                                     <div class="row">
-                                        ${feed.author} ,  ${feed.publishDate}
+                                        ${feed.author} ,  ${feed.publishDate.format("dd MMMM yyyy")}
                                     </div>
 
                                     <div class="row">
